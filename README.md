@@ -32,7 +32,7 @@ sudo apt install git
 ## Installation
 1. Clone the repository:
 ```bash
-git clone https://github.com/idiotboxai/MSBTE-papers-downloader.git
+git clone https://github.com/idiotboxai/MSBTE-papers-downlaoder
 ```
 
 2. Navigate to the repository:
