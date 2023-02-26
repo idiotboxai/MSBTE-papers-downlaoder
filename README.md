@@ -37,7 +37,7 @@ git clone https://github.com/idiotboxai/MSBTE-papers-downlaoder
 
 2. Navigate to the repository:
 ```git
-cd MSBTE-papers-downloader
+cd MSBTE-papers-downlaoder
 ```
 3. Install the required packages:
 ```python
