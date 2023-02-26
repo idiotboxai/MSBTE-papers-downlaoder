@@ -44,9 +44,14 @@ cd MSBTE-papers-downlaoder
 pip install -r requirements.txt
 ```
 ## usage
+Windows :
 1. Run the script:
 ```python
 python paper_download.py
+```
+2. Linux 
+```python
+python3 paper_download.py
 ```
 ## contributing
 ### Ways to contribute
