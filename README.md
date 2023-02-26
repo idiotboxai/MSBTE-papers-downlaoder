@@ -1,6 +1,10 @@
 # MSBTE Papers Downloader
-<img src="https://github.com/idiotboxai/MSBTE-papers-downlaoder/blob/main/image1.png">
- 
+<h1 align="center">
+  <a href="https://github.com/s0md3v/XSStrike"><img src="https://github.com/idiotboxai/MSBTE-papers-downlaoder/blob/main/image1.png">
+ </a>
+</h1>
+
+
 This is a Python script that can be used to download past question papers for various subjects offered by the Maharashtra State Board of Technical Education (MSBTE).
 ## Requirements
 
@@ -52,3 +56,5 @@ python paper_download.py
 * Fix something and open a pull request
 * Help me document the code
 * Spread the word
+## license
+Check license <a href="https://github.com/idiotboxai/MSBTE-papers-downlaoder/blob/main/LICENSE">here </a>
