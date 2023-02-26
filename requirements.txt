@@ -1,0 +1,7 @@
+beautifulsoup4
+progressbar
+requests
+tqdm
+webbrowser
+time
+
