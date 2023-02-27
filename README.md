@@ -5,7 +5,7 @@
 </h1>
 
 
-This is a Python script that can be used to download past question papers for various subjects offered by the Maharashtra State Board of Technical Education (MSBTE).
+This is a Python script that can be used to download past question papers for various subjects offered to students of the Maharashtra State Board of Technical Education (MSBTE).
 ## Requirements
 
 * Python latest+
