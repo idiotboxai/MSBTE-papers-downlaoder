@@ -4,4 +4,4 @@ requests
 tqdm
 webbrowser
 time
-request
+requests
