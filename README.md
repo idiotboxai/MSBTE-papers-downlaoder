@@ -1,6 +1,6 @@
-# MSBTE Papers Downloader
+# MSBTE Previous year Papers Downloader
 <h1 align="center">
-  <a href="/"><img src="https://github.com/idiotboxai/MSBTE-papers-downlaoder/blob/main/image1.png">
+  <a href="#"><img src="https://github.com/idiotboxai/MSBTE-papers-downlaoder/blob/main/image1.png">
  </a>
 </h1>
 
