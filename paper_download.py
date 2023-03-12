@@ -96,7 +96,7 @@ def download_paper(paper_type):
     print("Download complete!")
 
 # prompt user for paper type
-paper_type = input("Which paper do you want to download? Enter 1 for question paper and 2 for answer paper: ")
+paper_type = input("Enter 1 for question paper selection and 2 for answer paper selection: ")
 
 # call download_paper function based on user input
 if paper_type == "1":
