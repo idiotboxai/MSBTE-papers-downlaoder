@@ -1,107 +1,125 @@
 import requests
 import os
-import time
-import webbrowser
+import threading
 from tqdm import tqdm
-def open_telegram():
-  webbrowser.open("https://t.me/msbtehelp")
-print("\033]8;;https://t.me/msbtehelp\a" + "Join telegram" + "\033]8;;\a")
-print("\033[2m" + """Created by - idiotboxai""" + "\033[0m")
-print("\033[38;5;208m" + """
- ███▄ ▄███▓  ██████  ▄▄▄▄   ▄▄▄█████▓▓█████           
-▓██▒▀█▀ ██▒▒██    ▒ ▓█████▄ ▓  ██▒ ▓▒▓█   ▀           
-▓██    ▓██░░ ▓██▄   ▒██▒ ▄██▒ ▓██░ ▒░▒███             
-▒██    ▒██   ▒   ██▒▒██░█▀  ░ ▓██▓ ░ ▒▓█  ▄           
-▒██▒   ░██▒▒██████▒▒░▓█  ▀█▓  ▒██▒ ░ ░▒████▒          
-░ ▒░   ░  ░▒ ▒▓▒ ▒ ░░▒▓███▀▒  ▒ ░░   ░░ ▒░ ░          
-░  ░      ░░ ░▒  ░ ░▒░▒   ░     ░     ░ ░  ░          
-░      ░   ░  ░  ░   ░    ░   ░         ░             
-       ░         ░   ░                  ░  ░          
-                          ░                           
- ███▄    █  ▄▄▄      ▄▄▄█████▓ ██▓ ▒█████   ███▄    █ 
- ██ ▀█   █ ▒████▄    ▓  ██▒ ▓▒▓██▒▒██▒  ██▒ ██ ▀█   █ 
+import sys
+
+# Function to print the banner
+def print_banner():
+    banner = """
+\033]8;;https://t.me/msbtehelp\aJoin telegram\033]8;;\a
+\033[2mCreated by - idiotboxai\033[0m
+\033[38;5;208m
+ ███▄ ▄███▓  ██████  ▄▄▄▄   ▄▄▄█████▓▓█████
+▓██▒▀█▀ ██▒▒██    ▒ ▓█████▄ ▓  ██▒ ▓▒▓█   ▀
+▓██    ▓██░░ ▓██▄   ▒██▒ ▄██▒ ▓██░ ▒░▒███
+▒██    ▒██   ▒   ██▒▒██░█▀  ░ ▓██▓ ░ ▒▓█  ▄
+▒██▒   ░██▒▒██████▒▒░▓█  ▀█▓  ▒██▒ ░ ░▒████▒
+░ ▒░   ░  ░▒ ▒▓▒ ▒ ░░▒▓███▀▒  ▒ ░░   ░░ ▒░ ░
+░  ░      ░░ ░▒  ░ ░▒░▒   ░     ░     ░ ░  ░
+░      ░   ░  ░  ░   ░    ░   ░         ░
+       ░         ░   ░                  ░  ░
+                          ░
+ ███▄    █  ▄▄▄      ▄▄▄█████▓ ██▓ ▒█████   ███▄    █
+ ██ ▀█   █ ▒████▄    ▓  ██▒ ▓▒▓██▒▒██▒  ██▒ ██ ▀█   █
 ▓██  ▀█ ██▒▒██  ▀█▄  ▒ ▓██░ ▒░▒██▒▒██░  ██▒▓██  ▀█ ██▒
 ▓██▒  ▐▌██▒░██▄▄▄▄██ ░ ▓██▓ ░ ░██░▒██   ██░▓██▒  ▐▌██▒
 ▒██░   ▓██░ ▓█   ▓██▒  ▒██▒ ░ ░██░░ ████▓▒░▒██░   ▓██░
-░ ▒░   ▒ ▒  ▒▒   ▓▒█░  ▒ ░░   ░▓  ░ ▒░▒░▒░ ░ ▒░   ▒ ▒ 
+░ ▒░   ▒ ▒  ▒▒   ▓▒█░  ▒ ░░   ░▓  ░ ▒░▒░▒░ ░ ▒░   ▒ ▒
 ░ ░░   ░ ▒░  ▒   ▒▒ ░    ░     ▒ ░  ░ ▒ ▒░ ░ ░░   ░ ▒░
-   ░   ░ ░   ░   ▒     ░       ▒ ░░ ░ ░ ▒     ░   ░ ░ 
-         ░       ░  ░          ░      ░ ░           ░ 
-                                           
-""" + "\033[0m")
-time.sleep(3)
-def download_paper(paper_type):
-    subject_code = input("What is the subject code? ")
-    print("Choose year from the following:")
-    print("QPS22 - Summer 2022 enter 1")
-    print("QPW19 - Winter 2019 enter 2")
-    print("QPS19 - Summer 2019 enter 3")
-    print("QPW18 - Winter 2018 enter 4")
-    print("QPS18 - Summer 2018 enter 5")
-    print("QPW17 - Winter 2017 enter 6")
-    print("QPS17 - Summer 2017 enter 7")
-    year = input("Enter the year code: ")
+   ░   ░ ░   ░   ▒     ░       ▒ ░░ ░ ░ ▒     ░   ░ ░
+         ░       ░  ░          ░      ░ ░           ░
 
-    # convert year code to format used in URL
-    if year == "1":
-        year_code = "QPS22"
-    elif year == "2":
-        year_code = "QPW19"
-    elif year == "3":
-        year_code = "QPS19"
-    elif year == "4":
-        year_code = "QPW18"
-    elif year == "5":
-        year_code = "QPS18"
-    elif year == "6":
-        year_code = "QPW17"
-    elif year == "7":
-        year_code = "QPS17"
-    else:
-        print("Invalid year code entered")
-        return
+\033[0m
+    """
+    print(banner)
 
-    # construct the URL based on the paper type and user input
+# Function to download a paper
+def download_paper(paper_type, subject_code, year_code):
+    # Construct the URL based on the paper type and user input
     if paper_type == "question":
         url = f"https://msbte.org.in/portal/msbte_files/questionpaper_search/{year_code}/{subject_code}.pdf"
-        file_name = f"{subject_code}_question_paper.pdf"
+        file_name = f"{subject_code}_question_paper_{year_code}.pdf"
     elif paper_type == "answer":
         url = f"https://msbte.org.in/portal/msbte_files/ModalAns/{year_code}/{subject_code}.pdf"
-        file_name = f"{subject_code}_answer_paper.pdf"
+        file_name = f"{subject_code}_answer_paper_{year_code}.pdf"
     else:
         print("Invalid paper type entered")
         return
 
-    # create directory if it does not exist
+    # Create directory for subject code if it does not exist
     if not os.path.exists(subject_code):
         os.mkdir(subject_code)
 
-    # check if a directory with subject code already exists
-    else:
-        # if it does, create another directory with year code
-        os.mkdir(os.path.join(subject_code, year_code))
-        subject_code = os.path.join(subject_code, year_code)
+    # Create directory for paper type inside the subject code folder if it does not exist
+    paper_folder_path = os.path.join(subject_code, paper_type)
+    if not os.path.exists(paper_folder_path):
+        os.mkdir(paper_folder_path)
 
-    # download the file and save it to the directory
-    response = requests.get(url, stream=True)
-    file_size = int(response.headers.get('content-length', 0))
-    block_size = 1024
-    progress_bar = tqdm(total=file_size, unit='iB', unit_scale=True)
-    with open(os.path.join(subject_code, file_name), 'wb') as f:
-        for data in response.iter_content(block_size):
-            progress_bar.update(len(data))
-            f.write(data)
-    progress_bar.close()
+    # Check if the PDF file already exists in the folder
+    if os.path.exists(os.path.join(paper_folder_path, file_name)):
+        print(f"{paper_type} paper ({year_code}) already downloaded.")
+        return
 
-    print("Download complete!")
+    # Function to check if the URL is a valid PDF
+    def is_valid_pdf():
+        try:
+            response = requests.head(url)
+            content_length = response.headers.get('content-length')
+            return content_length and int(content_length) >= 1024
+        except Exception as e:
+            return False
 
-# prompt user for paper type
-paper_type = input("Enter 1 for question paper selection and 2 for answer paper selection: ")
+    if not is_valid_pdf():
+        print(f"Invalid {paper_type} paper ({year_code}). Skipping download.")
+        return
 
-# call download_paper function based on user input
-if paper_type == "1":
-    download_paper("question")
-elif paper_type == "2":
-    download_paper("answer")
-else:
-    print("Invalid input, please enter 1 or 2")
+    # Function to download the file and update the progress bar
+    def download_with_progress():
+        response = requests.get(url, stream=True)
+        file_size = int(response.headers.get('content-length', 0))
+        block_size = 1024
+        progress_bar = tqdm(total=file_size, unit='iB', unit_scale=True, unit_divisor=1024, ncols=100, ascii=True, bar_format="{l_bar}{bar:50}{r_bar}")
+        with open(os.path.join(paper_folder_path, file_name), 'wb') as f:
+            for data in response.iter_content(block_size):
+                f.write(data)
+                progress_bar.update(len(data))
+        progress_bar.close()
+        print(f"Download complete for {paper_type} paper ({year_code})!")
+
+    # Create a thread for each download
+    download_thread = threading.Thread(target=download_with_progress)
+    download_thread.start()
+
+def main():
+    # Print the banner
+    print_banner()
+
+    subject_code = input("Enter the subject code: ")
+
+    # Define available year codes for question papers
+    question_year_codes = ["QPW23", "QPS23", "QPW21", "QPW22", "QPS22", "QPW19", "QPS19", "QPW18", "QPS18", "QPW17", "QPS17"]
+
+    # Create threads for downloading question papers
+    question_threads = []
+    for year_code in question_year_codes:
+        thread = threading.Thread(target=download_paper, args=("question", subject_code, year_code))
+        question_threads.append(thread)
+        thread.start()
+
+    # Define available year codes for answer papers
+    answer_year_codes = ["S23", "W23", "W21", "S21", "W22", "S22", "S20", "W20", "W19", "S19", "W18", "S18", "W17", "S17"]
+
+    # Create threads for downloading answer papers
+    answer_threads = []
+    for year_code in answer_year_codes:
+        thread = threading.Thread(target=download_paper, args=("answer", subject_code, year_code))
+        answer_threads.append(thread)
+        thread.start()
+
+    # Wait for all threads to finish
+    for thread in question_threads + answer_threads:
+        thread.join()
+
+if __name__ == "__main__":
+    main()
